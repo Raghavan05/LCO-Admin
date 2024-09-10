@@ -1,0 +1,90 @@
+@use "sass:map";
+@use '../../../styles/abstracts' as *;
+@import "../../../styles/index.scss";
+@import "../../../styles/settings/variables";
+
+.topbar{
+    &--desktop{
+        display: flex;
+        justify-content: flex-end;
+        height: 70px;
+        border-bottom: 2px solid $light;
+
+        &__rightSec{
+            display: flex;
+            align-items: center;
+            column-gap: 20px;
+            
+            & .topbar-widgetSec{
+                &__widget{
+                    width: 42px;
+                    height: 42px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    transition: all .1s linear;
+                    position: relative;
+
+                    & .counterPill{
+                        width: 8px;
+                        height: 8px;
+                        top: 4px;
+                        right: 8px;
+                        position: absolute;
+                        font-size: 10px;
+                        font-weight: 400;
+                        background-color: $danger;
+                        border-radius: 50%;
+                    }
+
+                    & i{
+                        font-size: 20px;
+                        color: $dark;
+                    }
+                    
+                    &:hover{
+                        cursor: pointer;
+                        background-color: rgba(20, 24, 33, .1)
+                    }
+                }
+                
+            }
+
+            & .topbar-user{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background-color: $light;
+                height: 100%;
+                padding-inline: 15px;
+
+                &__profileImg{
+                    width: 32px;
+                    height: 32px;
+                    
+                    & img{
+                        object-fit: contain;
+                        width: inherit;
+                        height: inherit;
+                        border-radius: 50%;
+                    }
+                }
+                &__profileInfo{
+                    &--title{
+                        font-family: $font-family-sans-serif;
+                        font-size: 15px;
+                        font-weight: 600;
+                        margin-bottom: .4px;
+                    }
+                    &--para{
+                        margin-bottom: 0;
+                        font-family: $font-family-sans-serif;
+                        font-size: 13px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}

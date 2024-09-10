@@ -1,0 +1,65 @@
+@use "sass:map";
+@import "../../../styles/index.scss";
+@import "../../../styles/settings/variables";
+
+.sideNavBar--desktop{
+    width: 240px;
+    padding-block: 20px;
+    border-right: 2px solid $light;
+    height: 100%;
+    padding: 0 1.3rem;
+
+    &__header{
+        display: flex;
+        justify-content: center;
+        transition: all .1s ease-out;
+
+        p {
+            line-height: 60px;
+            margin-bottom: 0;
+            font-size: 26px;
+            font-weight: 700;
+            color: $primary;
+            font-family: $font-family-sans-serif;
+        }
+    }
+
+    &__navContent{
+        padding-block: 20px;
+
+        &__menuSection{
+            flex-direction: column;
+            gap: 15px;
+
+            .navItem{
+                .nav-link{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 1.05rem;
+                    font-family: $font-family-sans-serif;
+                    font-weight: 500;
+                    color: #6d7080;
+                    padding: .825rem 1.3rem;
+                    border-left: 2.5px solid $light;
+
+                    i{
+                        color: $dark;
+                        font-size: 1.2rem;
+                    }
+
+                    &.active{
+                        color: $primary;
+                        border-left: 2.5px solid $primary;
+
+                        i{
+                            color: $primary;
+                        }
+                    }
+
+                    
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+@use "sass:map";
+@import "../../../../styles/index.scss";
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/settings/custom";
+
+.addEmployee-modal{
+    .employeeRegisteration-Form{
+        .ctaSection{
+            display: flex;
+            gap: 20px;
+            margin-inline: auto;
+            justify-content: end;
+
+            &btn-blue{
+                color: $white;
+            }
+        }
+    }   
+}

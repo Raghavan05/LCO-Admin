@@ -1,0 +1,29 @@
+@use "../abstracts" as *;
+
+.page-wrapper {
+    display: flex;
+
+    .navBarContainer {
+        height: 100dvh;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .parentContainer {
+        width: 100%;
+        margin-inline: auto;
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #fff;
+        }
+
+        .page-content {
+            padding-block: 20px;
+            min-height: calc(100dvh - 70px);
+        }
+    }
+}

@@ -1,0 +1,103 @@
+@use "sass:map";
+@import "../../../styles/index.scss";
+@import "../../../styles/settings/variables";
+
+.employee {
+    padding-inline: 20px;
+    border: 1px solid $light;
+    border-radius: 5px;
+
+    & .topSection {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 10px 20px 0;
+
+        &__left {
+            &--title {
+                font-family: $font-family-sans-serif;
+                color: $dark;
+                font-size: map-get($map: $font-sizes, $key: 3);
+                font-weight: 500;
+                margin-bottom: 0;
+            }
+        }
+
+        &__right {
+            display: flex;
+            column-gap: 30px;
+
+            & .filter-btn {
+                display: flex;
+                gap: 8px;
+                border-radius: 0.4rem;
+                font-weight: $font-weight-normal;
+                @include button-size(0.5rem, 1rem, 1.25rem, 0.25rem);
+
+                &:hover{
+                    color: $light;
+                }
+            }
+
+            .primary-btn {
+                display: flex;
+                gap: 8px;
+                border-radius: 0.4rem;
+                color: $light;
+                font-weight: $font-weight-normal;
+                @include button-size(0.5rem, 1rem, 1.25rem, 0.25rem);
+            }
+        }
+    }
+
+    & .dataGrid {
+        .tHead {
+            border-bottom: 2px solid $light;
+            background-color: $light;
+            padding-block: 10px;
+
+            .tRow {
+                & th {
+                    h6 {
+                        text-align: center;
+                        font-family: $font-family-sans-serif;
+                        font-size: 15px;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+
+        & .tBody {
+            border-top-width: 1px;
+
+            .tRow {
+                .actionSec {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+
+                    & a {
+                        font-size: 15px;
+                        font-family: $font-family-sans-serif;
+                        text-decoration: none;
+                        transition: 0.2s all linear;
+                        color: $secondary;
+
+                        &:hover {
+                            font-weight: 600;
+                        }
+                    }
+                }
+
+                td {
+                    text-align: center;
+                    font-family: $font-family-sans-serif;
+                    font-size: 15px;
+                    color: $dark;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}
