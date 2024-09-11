@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "../../../styles" as *;
 
-.content{
+.taskContent{
     padding-inline: 20px;
     padding-bottom: 10px;
     border: 1px solid $light;
@@ -26,12 +26,11 @@
             display: flex;
             column-gap: 30px;
 
-            .filter-widget{
+            .filter-btn{
                 display: flex;
                 align-items: center;
                 column-gap: 10px;
-                border: 1px solid $primary;
-                padding: 3px 15px;
+                padding: 2px 15px;
                 border-radius: 5px;
                 cursor: pointer;
 
@@ -42,10 +41,24 @@
                     font-weight: 400;
                     color: $primary;
                     font-family: $font-family-sans-serif;
-                }
 
+                }
+                
                 & i{
                     color: $primary;
+                    font-size: 18px;
+                }
+                &:hover{
+                    & p, i{
+                        color: $white;
+                    }
+                }
+            }
+            
+            .primary-btn{
+                color: $white;
+                & i{
+                    color: $white;
                     font-size: 18px;
                 }
             }

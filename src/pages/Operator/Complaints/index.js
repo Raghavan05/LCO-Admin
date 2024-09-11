@@ -1,48 +1,69 @@
 import React from 'react'
 import "./complaints.scss";
 
-import ComplaintCard from "../../../components/Operator/ComplaintCard";
+import ComplaintCard from "../../../components/Common/ComplaintCard";
 
 const complaintsLst = [
     {
-        status: "new",
+        status: "completed",
         serviceArea: "14 B, North Street, D Bock, Los Angles",
         allotedEmployee: "Mukesh",
         dateTime: "15/05/2007"
 
     },
     {
-        status: "old",
+        status: "new",
         serviceArea: "14 B, North Street, D Bock, Los Angles",
         allotedEmployee: "Varun",
         dateTime: "15/05/2007"
 
     },
     {
-        status: "In Progress",
+        status: "stopped",
+        serviceArea: "14 B, North Street, D Bock, Los Angles",
+        allotedEmployee: "Aksah",
+        dateTime: "15/05/2007"
+
+    },
+    {
+        status: "ongoing",
         serviceArea: "14 B, North Street, D Bock, Los Angles",
         allotedEmployee: "Sangeeth",
         dateTime: "15/05/2007"
 
     },
     {
-        status: "complete",
+        status: "onHold",
         serviceArea: "14 B, South Street, New Delhi",
         allotedEmployee: "Subash",
         dateTime: "15/05/2007"
 
     },
     {
-        status: "complete",
+        status: "started",
         serviceArea: "14 B, North Street, D Bock, Los Vegas",
         allotedEmployee: "Rahul",
         dateTime: "15/05/2007"
 
     },
     {
-        status: "complete",
+        status: "employeeChanged",
         serviceArea: "14 B, North Street, D Bock, San Antonio",
         allotedEmployee: "Aneesh",
+        dateTime: "15/05/2007"
+
+    },
+    {
+        status: "allottedEmployee",
+        serviceArea: "14 B, North Street, D Bock, San Antonio",
+        allotedEmployee: "John",
+        dateTime: "15/05/2007"
+
+    },
+    {
+        status: "stopped",
+        serviceArea: "14 B, North Street, D Bock, Los Angles",
+        allotedEmployee: "Varun",
         dateTime: "15/05/2007"
 
     },

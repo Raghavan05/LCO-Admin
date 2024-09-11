@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './tasks.scss';
 
 import Button from "react-bootstrap/Button";
 
 import TaskCard from "../../../components/Common/TaskCard";
+import InstallationDetailModal from "../../../components/Common/Modals/InstallationDetailModal"
 
 const TaskLst = [
     {
@@ -72,28 +73,38 @@ const TaskLst = [
 ]
 
 const Index = () => {
+    const [openModal, setOpenModal] = useState(false);
+    const [taskDetail, setTaskDetail] = useState({});
+
+    const openTaskDetailModal = (status, data) => {
+        setOpenModal(status);
+        setTaskDetail(data)
+    }
+
     return (
-        <div className="taaskContent">
-            <div className="topSection">
-                <div className="topSection--left">
-                    <h3 className="topSection--left__title">
-                        Tasks
-                    </h3>
+        <>
+            <InstallationDetailModal show={openModal} data={taskDetail} onHide= {() => openTaskDetailModal(false, {})}/>
+            <div className="taskContent">
+                <div className="topSection">
+                    <div className="topSection--left">
+                        <h3 className="topSection--left__title">
+                            Installation
+                        </h3>
+                    </div>
+                    <div className="topSection--right">
+                        <Button variant="outline-primary" className="filter-btn">
+                            <p>Filter</p>
+                            <i className="bi bi-filter"></i>
+                        </Button>
+                    </div>
                 </div>
-                <div className="topSection--right">
-                    <Button variant="outline-primary" className="filter-btn">
-                        <p>Filter</p>
-                        <i className="bi bi-filter"></i>
-                    </Button>
-                    <Button variant="primary" className="primary-btn">
-                        <i className="bi bi-plus"></i> Create
-                    </Button>
+                <div className="bottomSection">
+                    {TaskLst?.map((data, i) => { return( 
+                        <TaskCard data={data} key={i} showModal={(status, data) => openTaskDetailModal(status, data)}/> 
+                    )})}
                 </div>
             </div>
-            <div className="bottomSection">
-                {TaskLst?.map((data, i) => { return( <TaskCard data={data} key={i}/> )})}
-            </div>
-        </div>
+        </>
     )
 }
 

@@ -1,7 +1,5 @@
 @use "sass:map";
-@use '../../../styles/abstracts' as *;
-@import "../../../styles/index.scss";
-@import "../../../styles/settings/variables";
+@use '../../../styles' as *;
 
 .topbar{
     &--desktop{

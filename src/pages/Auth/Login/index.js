@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,17 +31,8 @@ const Index = () => {
             validation
         ),
     });
-    useEffect(() => {
-        console.log(errors);
-        
-    }, [errors])
-    
-    console.log(errors);
-    
     
     const onSubmit = (data) => {
-        console.log(data, "--", errors);
-        
         navigate("/operator/dashboard")
     }
 
@@ -49,7 +40,7 @@ const Index = () => {
         <div className="container authPage">
             <Card className="signInSec">
                 <div className="signInSec--left">
-                    <h2> I Cable</h2>
+                    <h2> ICable</h2>
                 </div>
                 <Card.Body className="signInSec-body">
                     <div className="signInSec-body--right">

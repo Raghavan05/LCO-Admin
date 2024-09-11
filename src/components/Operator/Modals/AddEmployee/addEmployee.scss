@@ -1,7 +1,5 @@
 @use "sass:map";
-@import "../../../../styles/index.scss";
-@import "../../../../styles/settings/variables";
-@import "../../../../styles/settings/custom";
+@use "../../../../styles" as *;
 
 .addEmployee-modal{
     .employeeRegisteration-Form{

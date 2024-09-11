@@ -1,6 +1,5 @@
 @use "sass:map";
-@import "../../../styles/index.scss";
-@import "../../../styles/settings/variables";
+@use "../../../styles" as *;
 
 .dashContent{
     padding-inline: 20px;
@@ -160,6 +159,7 @@
                     .tRow {
                         .identifier{
                             color: $secondary;
+                            font-weight: 500;
                         }
 
                         .tCell{

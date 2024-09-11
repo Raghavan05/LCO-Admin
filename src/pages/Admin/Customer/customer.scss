@@ -3,7 +3,6 @@
 
 .content{
     padding-inline: 20px;
-    padding-bottom: 10px;
     border: 1px solid $light;
     border-radius: 5px;
 
@@ -12,17 +11,17 @@
         justify-content: space-between;
         padding: 20px 10px 20px 0;
 
-        &--left{
-            &__title{
+        &__left{
+            &--title{
                 font-family: $font-family-sans-serif;
                 color: $dark;
-                // font-size: map-get($map: $font-sizes, $key: 3);
+                font-size: map-get($map: $font-sizes, $key: 3);
                 font-weight: 500;
                 margin-bottom: 0;
             }
         }
 
-        &--right{
+        &__right{
             display: flex;
             column-gap: 30px;
 
@@ -52,9 +51,36 @@
         }
     }
 
-    & .bottomSection{
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
+    & .dataGrid{
+        .tHead{
+            border-bottom: 2px solid $light;
+            background-color: $light;
+            padding-block: 10px;
+
+            .tRow{
+                & th{
+                    h6{
+                        text-align: center;
+                        font-family: $font-family-sans-serif;
+                        font-size: 15px;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+
+        & .tBody{
+            border-top-width: 1px;
+
+            .tRow{
+                td{
+                    text-align: center;
+                    font-family: $font-family-sans-serif;
+                    font-size: 15px;
+                    color: $dark;
+                    font-weight: 400;
+                }
+            }
+        }
     }
 }

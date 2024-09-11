@@ -1,7 +1,6 @@
 @use "sass:map";
 @use "./../abstracts" as *;
-@import "./../settings/variables";
-@import "./../settings/custom";
+@use "./../settings" as *;
 
 html {
     scroll-behavior: smooth;
@@ -24,7 +23,6 @@ a {
 
     &:hover {
         text-decoration: none;
-        color: inherit;
     }
 }
 

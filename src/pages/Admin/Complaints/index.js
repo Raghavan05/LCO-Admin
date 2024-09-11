@@ -1,11 +1,10 @@
-import React from 'react'
-import './tasks.scss';
+import React, { useState } from 'react'
+import './complaints.scss';
 
-import Button from "react-bootstrap/Button";
+import ComplaintCard from "../../../components/Common/ComplaintCard";
+import ComplaintDetail from "../../../components/Common/Modals/ComplaintDetail";
 
-import TaskCard from "../../../components/Common/TaskCard";
-
-const TaskLst = [
+const complaintsLst = [
     {
         status: "completed",
         serviceArea: "14 B, North Street, D Bock, Los Angles",
@@ -70,30 +69,39 @@ const TaskLst = [
 
     },
 ]
-
 const Index = () => {
+    const [openModal, setOpenModal] = useState(false);
+    const [complaintDetail, setComplaintDetail] = useState({});
+
+    const openTaskDetailModal = (status, data) => {
+        setOpenModal(status);
+        setComplaintDetail(data)
+    }
+
     return (
-        <div className="taaskContent">
-            <div className="topSection">
-                <div className="topSection--left">
-                    <h3 className="topSection--left__title">
-                        Tasks
-                    </h3>
+        <>
+            <ComplaintDetail show={openModal} data={complaintDetail} onHide= {() => openTaskDetailModal(false, {})}/>
+            <div className="content">
+                <div className="topSection">
+                    <div className="topSection--left">
+                        <h3 className="topSection--left__title">
+                            Complaints
+                        </h3>
+                    </div>
+                    <div className="topSection--right">
+                        <div className="filter-widget">
+                            <p>Filter</p>
+                            <span className="filter-widget__cover">
+                                <i className="bi bi-filter filter-widget__cover"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div className="topSection--right">
-                    <Button variant="outline-primary" className="filter-btn">
-                        <p>Filter</p>
-                        <i className="bi bi-filter"></i>
-                    </Button>
-                    <Button variant="primary" className="primary-btn">
-                        <i className="bi bi-plus"></i> Create
-                    </Button>
+                <div className="bottomSection">
+                    {complaintsLst?.map((data, i) => { return( <ComplaintCard data={data} key={i} showModal={(status, data) => openTaskDetailModal(status, data)}/> )})}
                 </div>
             </div>
-            <div className="bottomSection">
-                {TaskLst?.map((data, i) => { return( <TaskCard data={data} key={i}/> )})}
-            </div>
-        </div>
+        </>
     )
 }
 

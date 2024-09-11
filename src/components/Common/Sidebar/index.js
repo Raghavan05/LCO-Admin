@@ -8,7 +8,7 @@ const Index = () => {
     return (
         <div className="sideNavBar--desktop">
             <div className="sideNavBar--desktop__header">
-                <p>I Cable</p>
+                <p>ICable</p>
             </div>
             <div className="sideNavBar--desktop__navContent">
                 <Nav className="sideNavBar--desktop__navContent__menuSection">
@@ -20,9 +20,9 @@ const Index = () => {
                     </NavItem>
 
                     <NavItem className="navItem">
-                        <NavLink to={"tasks"} className="nav-link">
+                        <NavLink to={"installation"} className="nav-link">
                             <i className="bi bi-list-check"></i>
-                            <span>Tasks</span>
+                            <span>Installation</span>
                         </NavLink>
                     </NavItem>
                     <NavItem className="navItem">

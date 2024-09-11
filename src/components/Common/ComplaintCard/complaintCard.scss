@@ -1,9 +1,7 @@
 @use "sass:map";
-@use '../../../styles/abstracts' as *;
-@import "../../../styles/index.scss";
-@import "../../../styles/settings/variables";
+@use '../../../styles' as *; 
 
-.taskCard{
+.complaintCard{
     padding: 10px 5px;
     border: 2px solid $light;
     -webkit-box-shadow: 1px 4px 5px -1.5px #dddddd;
@@ -23,6 +21,7 @@
         &__status{
             font-family: $font-family-sans-serif;
             font-weight: 600;
+
             &--new{
                 color: map-get($map: $theme-colors, $key: info);
             }
@@ -59,6 +58,7 @@
         }
 
         &--anchor{
+            font-family: $font-family-sans-serif;
             text-align: end;
             transition: all 0.3s;
             color: $primary;

@@ -1,24 +1,23 @@
 import React from "react";
 import { Route, Routes } from "react-router";
+
 import AdminDefaultLayout from "../layouts/AdminDefaultLayout";
-import Customer from "../pages/Customer";
-import CustomerList from "../pages/Customer/CustomerList";
-import Operator from "../pages/Operator";
+import Operator from "../pages/Admin/Operators";
+import Customer from "../pages/Admin/Customer"
+import Complaints from "../pages/Admin/Complaints";
+import Tasks from "../pages/Admin/Tasks";
+
 
 const AdminRoutes = () => {
     return (
         <Routes>
             <Route path="admin" element={<AdminDefaultLayout />}>
                 <Route path="dashboard" element={<div>Hai</div>} />
-                <Route path="tasks" element={<div>service</div>} />
-                <Route path="operators" >
-                    <Route index element={<Operator />} />
-                </Route>
-                <Route path="customers">
-                    <Route index element={<Customer />}/>
-                    <Route path="list" element={<CustomerList />} />
-                </Route>
-                <Route path="complaints" element={<div>service</div>} />
+                <Route path="installation" element={<Tasks/>} />
+                <Route path="operators" element={<Operator />} />
+                <Route path="customers" element={<Customer />}/>
+                <Route path="complaints" element={<Complaints />} />
+                <Route path="forum" element={<div>iN Progress</div>} />
             </Route>
         </Routes>
     );

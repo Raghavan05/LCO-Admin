@@ -1,6 +1,5 @@
 @use "sass:map";
-@import "../../../styles/index.scss";
-@import "../../../styles/settings/variables";
+@use "../../../styles" as *;
 
 .sideNavBar--desktop{
     width: 240px;

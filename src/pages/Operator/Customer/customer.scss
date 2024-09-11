@@ -1,6 +1,5 @@
 @use "sass:map";
-@import "../../../styles/index.scss";
-@import "../../../styles/settings/variables";
+@use "../../../styles" as *;
 
 .customer{
     padding-inline: 20px;

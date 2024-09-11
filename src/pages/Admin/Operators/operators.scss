@@ -1,7 +1,7 @@
 @use "sass:map";
-@use "../../styles" as *;
+@use "../../../styles" as *;
 
-.content {
+.operatorContent {
     padding-inline: 20px;
     border: 1px solid $light;
     border-radius: 5px;
@@ -70,6 +70,20 @@
             border-top-width: 1px;
 
             .tRow {
+                .identifier{
+                    color: $secondary;
+                    font-weight: 500;
+                }
+
+                .tCell{
+                    .pill{
+                        padding: 4px 10px !important;
+                        display: inline-flex;
+                        text-align: center;
+
+                    }
+                }
+
                 .actionSec {
                     display: flex;
                     justify-content: center;
