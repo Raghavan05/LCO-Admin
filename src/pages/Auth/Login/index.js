@@ -33,7 +33,7 @@ const Index = () => {
     });
     
     const onSubmit = (data) => {
-        navigate("/operator/dashboard")
+        navigate("/admin/dashboard")
     }
 
     return (

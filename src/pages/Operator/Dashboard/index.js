@@ -143,7 +143,7 @@ const Index = (props) => {
             <div className="dashContent--bottomSection">
                 <div className="dashContent--bottomSection__actionElements">
                     <div className="servicesSection">
-                        <div className="serviceCard" onClick={() => handleNavigate("/operator/tasks")}>
+                        <div className="serviceCard" onClick={() => handleNavigate("/admin/installation")}>
                             <img src={Installation} alt="installationImg" width='130px'/>
                             <h5>Installation</h5>
                         </div>
@@ -152,7 +152,7 @@ const Index = (props) => {
                             <h5>Payment</h5>
 
                         </div>
-                        <div className="serviceCard" onClick={() => handleNavigate("/operator/complaints")}>
+                        <div className="serviceCard" onClick={() => handleNavigate("/admin/complaints")}>
                             <img src={complaintForm} alt="complaintsImg" width='130px'/>
                             <h5>Complaints</h5>
                         </div>
