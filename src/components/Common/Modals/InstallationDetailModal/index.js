@@ -1,9 +1,13 @@
 import React from 'react'
 import "./InstallationDetail.scss";
-
 import Modal from 'react-bootstrap/Modal';
+import moment from 'moment';
 
 const Index = (props) => {
+    const { data } = props;
+
+    const formatDate = (date) => moment(date).format('DD MMM YYYY').toLowerCase();
+
     return (
         <Modal {...props} animation={true} className='installationDetail-modal'>
             <Modal.Header closeButton>
@@ -11,45 +15,108 @@ const Index = (props) => {
             </Modal.Header>
             <Modal.Body className='installationDetail-modal__body'>
                 <div className="installationDetail-modal__body__content">
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Created At</p>
-                        <h5 className='dataSection--text'>15/08/2014, 12.00 AM</h5>
-                    </div>
+                {data?.id && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>ID</p>
+                            <h5 className='dataSection--text'>{data.id}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Service Area</p>
-                        <h5 className='dataSection--text'>14 B, North Street, D Bock, Los Angles</h5>
-                    </div>
+                    {data?.customerId && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Customer ID</p>
+                            <h5 className='dataSection--text'>{data.customerId}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Alloted to</p>
-                        <h5 className='dataSection--text'>Mukesh</h5>
-                    </div>
+                    {data?.employeeId && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Employee ID</p>
+                            <h5 className='dataSection--text'>{data.employeeId}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Work started Date & Time</p>
-                        <h5 className='dataSection--text'>16/08/2014, 2.00 AM</h5>
-                    </div>
+                    {data?.statusId && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Status ID</p>
+                            <h5 className='dataSection--text'>{data.statusId}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Work end Date & Time</p>
-                        <h5 className='dataSection--text'>16/08/2014, 6.00 AM</h5>
-                    </div>
+                    {data?.vendorId && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Vendor ID</p>
+                            <h5 className='dataSection--text'>{data.vendorId}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Task Details</p>
-                        <h5 className='dataSection--text'>Need to install setup box</h5>
-                    </div>
+                    {data?.serviceAreaId && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Service Area ID</p>
+                            <h5 className='dataSection--text'>{data.serviceAreaId}</h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Status</p>
-                        <h5 className='dataSection--text'>On Hold</h5>
-                    </div>
+{/*                     
+                    {data?.name && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Plan Name</p>
+                            <h5 className='dataSection--text'>{data.name || 'Nil'}</h5>
+                        </div>
+                    )}
+                    <hr /> */}
+                    {/* {data?.createdAt && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Created At</p>
+                            <h5 className='dataSection--text'>
+                                {formatDate(data.createdAt) || 'Nil'}
+                            </h5>
+                        </div>
+                    )}
+                    <hr /> */}
+                    {/* {data?.updatedAt && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Updated At</p>
+                            <h5 className='dataSection--text'>
+                                {formatDate(data.updatedAt) || 'Nil'}
+                            </h5>
+                        </div>
+                    )}
+                    <hr /> */}
+                    {data?.complaintCreatedDate && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Created At</p>
+                            <h5 className='dataSection--text'>
+                                {formatDate(data.complaintCreatedDate) || 'Nil'}
+                            </h5>
+                        </div>
+                    )}
                     <hr />
-                    <div className="dataSection">
-                        <p className='dataSection--title'>Reason</p>
-                        <h5 className='dataSection--text'>Due to rain</h5>
-                    </div>
+                    {data?.workStartDate && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Created At</p>
+                            <h5 className='dataSection--text'>
+                                {formatDate(data.workStartDate) || 'Nil'}
+                            </h5>
+                        </div>
+                    )}
+                    <hr />
+                    {data?.reason && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Task Details</p>
+                            <h5 className='dataSection--text'>{data.reason || 'Nil'}</h5>
+                        </div>
+                    )}
+                    <hr />
+                    {data?.workEndDate && (
+                        <div className="dataSection">
+                            <p className='dataSection--title'>Created At</p>
+                            <h5 className='dataSection--text'>
+                                {formatDate(data.workEndDate) || 'Nil'}
+                            </h5>
+                        </div>
+                    )}
+                    <hr />
                 </div>
             </Modal.Body>
         </Modal>

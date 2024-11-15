@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './tasks.scss';
 
 import Button from "react-bootstrap/Button";
 
 import TaskCard from "../../../components/Common/TaskCard";
 import InstallationDetailModal from "../../../components/Common/Modals/InstallationDetailModal"
+import axios from 'axios';
 
 const TaskLst = [
     {
@@ -73,17 +74,40 @@ const TaskLst = [
 ]
 
 const Index = () => {
+    const [installationDetails, setInstallationDetails] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    const [taskDetail, setTaskDetail] = useState({});
+    const [installation, setInstallation] = useState({});
 
+    // Fetch data from the API
+    useEffect(() => {
+        const fetchInternetPlansDetails = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/installation/master/installation/installation`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
+                        },
+                    }
+                );  
+                console.log(response.data.data);
+                setInstallationDetails(response.data.data);
+            } catch (error) {
+                console.error("Error fetching customer data:", error);
+                // Optionally show an error state to the user
+            }
+        };
+
+        fetchInternetPlansDetails();
+    }, []);
     const openTaskDetailModal = (status, data) => {
         setOpenModal(status);
-        setTaskDetail(data)
+        setInstallation(data)
     }
 
     return (
         <>
-            <InstallationDetailModal show={openModal} data={taskDetail} onHide= {() => openTaskDetailModal(false, {})}/>
+            <InstallationDetailModal show={openModal} data={installation} onHide= {() => openTaskDetailModal(false, {})}/>
             <div className="taskContent">
                 <div className="topSection">
                     <div className="topSection--left">
@@ -99,8 +123,8 @@ const Index = () => {
                     </div>
                 </div>
                 <div className="bottomSection">
-                    {TaskLst?.map((data, i) => { return( 
-                        <TaskCard data={data} key={i} showModal={(status, data) => openTaskDetailModal(status, data)}/> 
+                    {installationDetails?.map((data, index) => { return( 
+                        <TaskCard data={data} key={index} showModal={(status, data) => openTaskDetailModal(status, data)}/> 
                     )})}
                 </div>
             </div>

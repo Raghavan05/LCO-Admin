@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './complaints.scss';
 
 import ComplaintCard from "../../../components/Common/ComplaintCard";
 import ComplaintDetail from "../../../components/Common/Modals/ComplaintDetail";
+import axios from 'axios';
 
 const complaintsLst = [
     {
@@ -70,17 +71,41 @@ const complaintsLst = [
     },
 ]
 const Index = () => {
+    const [complaintDetails, setComplaintDetails] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    const [complaintDetail, setComplaintDetail] = useState({});
+    const [complaint, setComplaint] = useState({});
+
+    // Fetch data from the API
+    useEffect(() => {
+        const fetchInternetPlansDetails = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/complaint/master/complaint/complaint`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
+                        },
+                    }
+                );  
+                console.log(response.data.data);
+                setComplaintDetails(response.data.data);
+            } catch (error) {
+                console.error("Error fetching customer data:", error);
+                // Optionally show an error state to the user
+            }
+        };
+
+        fetchInternetPlansDetails();
+    }, []);
 
     const openTaskDetailModal = (status, data) => {
         setOpenModal(status);
-        setComplaintDetail(data)
+        setComplaint(data)
     }
 
     return (
         <>
-            <ComplaintDetail show={openModal} data={complaintDetail} onHide= {() => openTaskDetailModal(false, {})}/>
+            <ComplaintDetail show={openModal} data={complaint} onHide= {() => openTaskDetailModal(false, {})}/>
             <div className="content">
                 <div className="topSection">
                     <div className="topSection--left">
@@ -98,7 +123,7 @@ const Index = () => {
                     </div>
                 </div>
                 <div className="bottomSection">
-                    {complaintsLst?.map((data, i) => { return( <ComplaintCard data={data} key={i} showModal={(status, data) => openTaskDetailModal(status, data)}/> )})}
+                    {complaintDetails?.map((data, i) => { return( <ComplaintCard data={data} key={i} showModal={(status, data) => openTaskDetailModal(status, data)}/> )})}
                 </div>
             </div>
         </>

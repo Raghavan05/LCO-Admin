@@ -1,0 +1,60 @@
+@use "sass:map";
+@use "../../../styles" as *;
+
+.content{
+    padding-inline: 20px;
+    padding-bottom: 10px;
+    border: 1px solid $light;
+    border-radius: 5px;
+
+    & .topSection{
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 10px 20px 0;
+
+        &--left{
+            &__title{
+                font-family: $font-family-sans-serif;
+                color: $dark;
+                // font-size: map-get($map: $font-sizes, $key: 3);
+                font-weight: 500;
+                margin-bottom: 0;
+            }
+        }
+
+        &--right{
+            display: flex;
+            column-gap: 30px;
+
+            .filter-widget{
+                display: flex;
+                align-items: center;
+                column-gap: 10px;
+                border: 1px solid $primary;
+                padding: 3px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                & p{
+                    line-height: 24px;
+                    margin-bottom: 0;
+                    font-size: 17px;
+                    font-weight: 400;
+                    color: $primary;
+                    font-family: $font-family-sans-serif;
+                }
+
+                & i{
+                    color: $primary;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    & .bottomSection{
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}

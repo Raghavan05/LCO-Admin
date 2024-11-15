@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import "./dashboard.scss";
 
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-
 import Installation from "../../../assets/img/installation.svg"
 import PaymentCard from "../../../assets/img/payments.svg"
 import complaintForm from "../../../assets/img/complaints.svg"
@@ -16,61 +16,13 @@ const tHeadTitle = [
     "Name",
     "Mobile Number",
     "Service Area",
-    "Username",
+    // "Username",
     "Status",
     "Cable Type",
     "Actions",
 ];
 
-const data = [
-	{
-		"id": "EB85CBC2",
-		"name": "Murphy",
-		"phone": "1-661-449-4115",
-		"serviceArea": "Hospet",
-		"email": "murphy@yahoo.couk",
-		"status": false,
-		"cableType": "Cable"
-	},
-	{
-		"id": "E9944167",
-		"name": "Lamar",
-		"phone": "1-813-723-0727",
-		"serviceArea": "Pondicherry",
-		"email": "lamar@hotmail.org",
-		"status": true,
-		"cableType": "Internet"
-	},
-	{
-		"id": "1FBFF340",
-		"name": "Burke",
-		"phone": "1-323-342-8782",
-		"serviceArea": "Silvassa",
-		"email": "burke@google.org",
-		"status": true,
-		"cableType": "Internet"
-	},
-	{
-		"id": "4CD4B3C9",
-		"name": "Melinda",
-		"phone": "1-141-632-3578",
-		"serviceArea": "Bhubaneswar",
-		"email": "melinda@outlook.com",
-		"status": true,
-		"cableType": "Cable"
-	},
-	{
-		"id": "F67870C9",
-		"name": "Joseph",
-		"phone": "1-774-499-6540",
-		"serviceArea": "Guwahati",
-		"email": "joseph@outlook.ca",
-		"status": false,
-		"cableType": "OTT"
-	},
-]
-
-const operatorsGrid = () => {
+const operatorsGrid = (data) => {
     return (
         <Table responsive hover striped>
             <thead className="tHead">
@@ -87,20 +39,20 @@ const operatorsGrid = () => {
                     return(
                         <tr className="tRow" key={i}>
                             <td className="tCell identifier">
-                                {res?.id}
+                                {res?.customerId}
                             </td>
                             <td className="tCell">
-                                {res?.name}
+                                {res?.customerName}
                             </td>
                             <td className="tCell">
-                                {res?.phone}
+                                {res?.mobileNo}
                             </td>
                             <td className="tCell">
-                                {res?.serviceArea}
+                                {res?.serviceAreaName}
                             </td>
-                            <td className="tCell">
+                            {/* <td className="tCell">
                                 {res?.email}
-                            </td>
+                            </td> */}
                             <td className="tCell">
                                 {res?.status === true ? 
                                     <Badge className='pill' bg='success' pill >Active</Badge> : 
@@ -127,11 +79,59 @@ const operatorsGrid = () => {
 };
 
 const Index = (props) => {
-    const navigate = useNavigate();
+        const [customers, setCustomers] = useState([]);
+        const [serviceAreas, setServiceAreas] = useState([]);
+        const [customerIds, setCustomerIds] = useState([]); // New state to store all customer IDs
+        const navigate = useNavigate();
 
-    const handleNavigate = (url) => {
-        navigate(url)
-    }
+        // Fetch profile data from backend
+        useEffect(() => {
+            const fetchCustomers = async () => {
+                const token = sessionStorage.getItem('authToken'); // Retrieve token from sessionStorage
+
+                try {
+                    const customerResponse = await axios.get(
+                        `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/customer/master/customer/customer`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            },  
+                        }
+                    );
+                    const customerData = customerResponse.data.data;
+                    console.log(customerData);
+                    
+                    setCustomers(customerData);
+        
+                    // Extracting and storing all customer IDs
+                    const ids = customerData.map((customer) => customer.id);
+                    setCustomerIds(ids); // Store the IDs in state for other use if needed
+        
+                    // Use the `ids` variable directly here
+                    const ServiceAreasResponse = await axios.get(
+                        `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/admin/master/serviceareas/serviceareas/${ids}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`
+                            },
+                        }
+                    );
+        
+                    console.log(ServiceAreasResponse.data.data);
+                    setServiceAreas(ServiceAreasResponse.data.data);
+                    
+                } catch (error) {
+                    console.error('Error fetching customer data:', error);
+                }
+            };
+        
+            fetchCustomers();
+        }, []);
+        
+    
+        const handleNavigate = (url) => {
+            navigate(url);
+        };
 
     return (
         <div className='dashContent'>
@@ -175,7 +175,7 @@ const Index = (props) => {
                         <h5 className='title'>Customers</h5>
                         <h6 className='cta'>View All</h6>
                     </span>
-                    {operatorsGrid()}
+                    {operatorsGrid(customers)}
                 </div>
             </div>
         </div>

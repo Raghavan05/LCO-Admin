@@ -38,6 +38,30 @@ const Index = () => {
                         </NavLink>
                     </NavItem>
                     <NavItem className="navItem">
+                        <NavLink to={"internetPlans"} className="nav-link">
+                            <i className="bi bi-people"></i>
+                            <span>Internet Plan</span>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem className="navItem">
+                        <NavLink to={"cablePlans"} className="nav-link">
+                            <i className="bi bi-people"></i>
+                            <span>Cable Plan</span>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem className="navItem">
+                        <NavLink to={"serviceArea"} className="nav-link">
+                            <i className="bi bi-people"></i>
+                            <span>Service Area</span>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem className="navItem">
+                        <NavLink to={"employee"} className="nav-link">
+                            <i className="bi bi-people"></i>
+                            <span>Employee</span>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem className="navItem">
                         <NavLink to={"complaints"} className="nav-link">
                             <i className="bi bi-ui-radios"></i>
                             <span>Complaints</span>

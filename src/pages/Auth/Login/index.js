@@ -1,40 +1,62 @@
-import React, { } from "react";
+import React from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
 import "./Login.scss";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Card from "react-bootstrap/Card";
 
 const validation = Yup.object({
-	username: Yup.string().trim().required("*Required").min(2, "Minimum 2 characters required").max(50, "Maximum 50 characters Allowed").nullable(),
-	password: Yup.string()
-    .required('Password is required')
-    .min(4, 'Password must be at least 4 characters long')
-    .max(30, 'Password cannot exceed 30 characters')
-    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[0-9]/, 'Password must contain at least one number')
-    .matches(/[!@#$%^&*()]/, 'Password must contain at least one special character')
-})
+    username: Yup.string().trim().required("*Required").min(2, "Minimum 2 characters required").max(50, "Maximum 50 characters Allowed").nullable(),
+    password: Yup.string()
+        .required('Password is required')
+        .min(4, 'Password must be at least 4 characters long')
+        .max(30, 'Password cannot exceed 30 characters')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[0-9]/, 'Password must contain at least one number')
+        .matches(/[!@#$%^&*()]/, 'Password must contain at least one special character')
+});
 
 const Index = () => {
     const navigate = useNavigate();
-
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onSubmit",
-        resolver: yupResolver(
-            validation
-        ),
+        resolver: yupResolver(validation),
     });
-    
-    const onSubmit = (data) => {
-        navigate("/admin/dashboard")
-    }
+
+    const onSubmit = async (data) => {
+        try {
+            console.log(data);
+            
+            const response = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}/vendors-connect/admin/auth/login`, 
+                {
+                    appId: "66b880c8dd5f42b66897ecbd",
+                    password: data.password,
+                    username: data.username,
+                }
+            );
+            
+
+            if (response.status === 200) {
+                // Assuming a successful response includes a token
+                const {accessToken} = response.data;
+                console.log(accessToken);
+                
+                sessionStorage.setItem('authToken', accessToken); // Store token in localStorage
+
+                navigate("/admin/dashboard"); // Redirect to dashboard on success
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Login failed. Please check your username and password.");
+        }
+    };
 
     return (
         <div className="container authPage">
@@ -72,7 +94,6 @@ const Index = () => {
                     </div>
                 </Card.Body>
             </Card>
-            ;
         </div>
     );
 };

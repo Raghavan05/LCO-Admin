@@ -1,0 +1,72 @@
+@use "sass:map";
+@use '../../../styles' as *; 
+
+.cableCard{
+    padding: 10px 5px;
+    border: 2px solid $light;
+    -webkit-box-shadow: 1px 4px 5px -1.5px #dddddd;
+    -moz-box-shadow: 1px 4px 5px -1.5px #dddddd;
+    box-shadow: 1px 4px 5px -1.5px #dddddd;
+
+    &__header{
+        display: flex;
+        justify-content: space-between;
+        background-color: $white;
+
+        &--title{
+            font-family: $font-family-sans-serif;
+            color: $dark;
+        }
+        
+        &__status{
+            font-family: $font-family-sans-serif;
+            font-weight: 600;
+
+            &--new{
+                color: map-get($map: $theme-colors, $key: info);
+            }
+            &--alloted{
+                color: map-get($map: $theme-colors, $key: warning);
+            }
+            &--completed{
+                color: map-get($map: $theme-colors, $key: success);
+            }
+            &--stopped{
+                color: map-get($map: $theme-colors, $key: danger);
+            }
+            &--ongoing{
+                color: map-get($map: $theme-colors, $key: primary);
+            }
+            &--onHold{
+                color: map-get($map: $theme-colors, $key: warning);
+            }
+            &--started{
+                color: map-get($map: $theme-colors, $key: success);
+            }
+        }
+    }
+
+    &__body{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        padding-bottom: 0;
+
+        &--text{
+            font-size: 16px;
+        }
+
+        &--anchor{
+            font-family: $font-family-sans-serif;
+            text-align: end;
+            transition: all 0.3s;
+            color: $primary;
+
+            &:hover{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+}
