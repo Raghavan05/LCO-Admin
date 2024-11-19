@@ -1,72 +1,119 @@
 @use "sass:map";
-@use '../../../styles' as *; 
+@use '../../../styles' as *;
 
-.serviceCard{
-    padding: 10px 5px;
-    border: 2px solid $light;
-    -webkit-box-shadow: 1px 4px 5px -1.5px #dddddd;
-    -moz-box-shadow: 1px 4px 5px -1.5px #dddddd;
-    box-shadow: 1px 4px 5px -1.5px #dddddd;
+.serviceCard {
+  padding: 10px 5px;
+  border: 2px solid $light;
+  -webkit-box-shadow: 1px 4px 5px -1.5px #dddddd;
+  -moz-box-shadow: 1px 4px 5px -1.5px #dddddd;
+  box-shadow: 1px 4px 5px -1.5px #dddddd;
 
-    &__header{
-        display: flex;
-        justify-content: space-between;
-        background-color: $white;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $white;
 
-        &--title{
-            font-family: $font-family-sans-serif;
-            color: $dark;
-        }
-        
-        &__status{
-            font-family: $font-family-sans-serif;
-            font-weight: 600;
-
-            &--new{
-                color: map-get($map: $theme-colors, $key: info);
-            }
-            &--alloted{
-                color: map-get($map: $theme-colors, $key: warning);
-            }
-            &--completed{
-                color: map-get($map: $theme-colors, $key: success);
-            }
-            &--stopped{
-                color: map-get($map: $theme-colors, $key: danger);
-            }
-            &--ongoing{
-                color: map-get($map: $theme-colors, $key: primary);
-            }
-            &--onHold{
-                color: map-get($map: $theme-colors, $key: warning);
-            }
-            &--started{
-                color: map-get($map: $theme-colors, $key: success);
-            }
-        }
+    &--title {
+      font-family: $font-family-sans-serif;
+      color: $dark;
     }
 
-    &__body{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 10px;
-        padding-bottom: 0;
+    &__status {
+      font-family: $font-family-sans-serif;
+      font-weight: 600;
 
-        &--text{
-            font-size: 16px;
+      // Enhanced pincode styles
+      &--pincode {
+        font-size: 1.3rem;
+        font-weight: bold;
+        background: linear-gradient(90deg, #ff7eb3, #ff758c, #ffa638);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient-shift 3s infinite linear, scale-bounce 1.5s infinite ease-in-out;
+        text-shadow: 0px 0px 8px rgba(255, 118, 118, 0.6);
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        transition: transform 0.4s ease, text-shadow 0.4s ease;
+
+        // Glowing circular background
+        &:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 120%;
+          height: 120%;
+          background: radial-gradient(circle, rgba(255, 174, 0, 0.3), transparent 70%);
+          border-radius: 50%;
+          opacity: 0.6;
+          animation: glow-pulse 2s infinite;
+          z-index: -1;
         }
 
-        &--anchor{
-            font-family: $font-family-sans-serif;
-            text-align: end;
-            transition: all 0.3s;
-            color: $primary;
-
-            &:hover{
-                text-decoration: underline;
-                cursor: pointer;
-            }
+        // On hover
+        &:hover {
+          transform: scale(1.2) rotate(2deg);
+          text-shadow: 0px 0px 15px rgba(255, 174, 0, 1);
         }
+      }
     }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 0;
+
+    &--text {
+      font-size: 16px;
+    }
+
+    &--anchor {
+      font-family: $font-family-sans-serif;
+      text-align: end;
+      transition: all 0.3s;
+      color: $primary;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// Gradient animation for pincode
+@keyframes gradient-shift {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+// Glow pulse for circular background
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+// Scale bounce for pincode text
+@keyframes scale-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }

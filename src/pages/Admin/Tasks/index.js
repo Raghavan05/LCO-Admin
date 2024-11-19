@@ -7,72 +7,6 @@ import TaskCard from "../../../components/Common/TaskCard";
 import InstallationDetailModal from "../../../components/Common/Modals/InstallationDetailModal"
 import axios from 'axios';
 
-const TaskLst = [
-    {
-        status: "completed",
-        serviceArea: "14 B, North Street, D Bock, Los Angles",
-        allotedEmployee: "Mukesh",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "new",
-        serviceArea: "14 B, North Street, D Bock, Los Angles",
-        allotedEmployee: "Varun",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "stopped",
-        serviceArea: "14 B, North Street, D Bock, Los Angles",
-        allotedEmployee: "Aksah",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "ongoing",
-        serviceArea: "14 B, North Street, D Bock, Los Angles",
-        allotedEmployee: "Sangeeth",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "onHold",
-        serviceArea: "14 B, South Street, New Delhi",
-        allotedEmployee: "Subash",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "started",
-        serviceArea: "14 B, North Street, D Bock, Los Vegas",
-        allotedEmployee: "Rahul",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "employeeChanged",
-        serviceArea: "14 B, North Street, D Bock, San Antonio",
-        allotedEmployee: "Aneesh",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "allottedEmployee",
-        serviceArea: "14 B, North Street, D Bock, San Antonio",
-        allotedEmployee: "John",
-        dateTime: "15/05/2007"
-
-    },
-    {
-        status: "stopped",
-        serviceArea: "14 B, North Street, D Bock, Los Angles",
-        allotedEmployee: "Varun",
-        dateTime: "15/05/2007"
-
-    },
-]
-
 const Index = () => {
     const [installationDetails, setInstallationDetails] = useState([]);
     const [openModal, setOpenModal] = useState(false);
@@ -81,12 +15,14 @@ const Index = () => {
     // Fetch data from the API
     useEffect(() => {
         const fetchInternetPlansDetails = async () => {
+            const token = sessionStorage.getItem('authToken'); // Retrieve token from sessionStorage
+
             try {
                 const response = await axios.get(
                     `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/installation/master/installation/installation`,
                     {
                         headers: {
-                            Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );  

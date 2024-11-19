@@ -1,17 +1,16 @@
-@use "sass:map";
-@use "../../../styles" as *;
+@use "../../../styles" as *; // Import shared variables
 
-.sideNavBar--desktop{
+.sideNavBar--desktop {
     width: 240px;
     padding-block: 20px;
     border-right: 1px solid $light;
     height: 100%;
     padding: 0 1.3rem;
 
-    &__header{
+    &__header {
         display: flex;
         justify-content: center;
-        transition: all .1s ease-out;
+        transition: all 0.1s ease-out;
 
         p {
             line-height: 60px;
@@ -23,15 +22,15 @@
         }
     }
 
-    &__navContent{
+    &__navContent {
         padding-block: 20px;
 
-        &__menuSection{
+        &__menuSection {
             flex-direction: column;
             gap: 15px;
 
-            .navItem{
-                .nav-link{
+            .navItem {
+                .nav-link {
                     display: flex;
                     align-items: center;
                     gap: 10px;
@@ -39,24 +38,57 @@
                     font-family: $font-family-sans-serif;
                     font-weight: 500;
                     color: #6d7080;
-                    padding: .825rem 1.3rem;
+                    padding: 0.825rem 1.3rem;
                     border-left: 2.5px solid $light;
 
-                    i{
+                    i {
                         color: $dark;
                         font-size: 1.2rem;
                     }
 
-                    &.active{
+                    &.active {
                         color: $primary;
                         border-left: 2.5px solid $primary;
 
-                        i{
+                        i {
                             color: $primary;
                         }
                     }
+                }
+            }
+        }
+    }
 
-                    
+    &__logoutSection {
+        margin-top: auto; // Push logout to the bottom
+        padding: 1rem;
+
+        .logoutButton {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            font-family: $font-family-sans-serif;
+            font-weight: 500;
+            color: #6d7080;
+            padding: 0.825rem 1.3rem;
+            background: none;
+            border: none;
+            border-left: 2.5px solid $light;
+            cursor: pointer;
+            transition: color 0.3s, border-left 0.3s;
+
+            i {
+                color: $dark;
+                font-size: 1.2rem;
+            }
+
+            &:hover {
+                color: $primary;
+                border-left: 2.5px solid $primary;
+
+                i {
+                    color: $primary;
                 }
             }
         }

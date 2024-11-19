@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./operators.scss";
+import "./employees.scss";
 
-import AddOperator from "../../../components/Operator/Modals/AddOperator";
-import EditOperator from "../../../components/Operator/Modals/EditOperator";
+import AddEmployee from "../../../components/Operator/Modals/AddEmployee";
+import EditEmployee from "../../../components/Operator/Modals/EditEmployee";
 
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -12,6 +12,7 @@ import { Badge } from 'react-bootstrap';
 const tHeadTitle = [
     "Id",
     "Name",
+    "Vendor ID",
     "Mobile Number",
     "Service Area",
     "Username",
@@ -19,7 +20,7 @@ const tHeadTitle = [
     "Actions",
 ];
 
-const operatorsGrid = (data, openEditOperatorModal) => {
+const employeesGrid = (data, openEditEmployeeModal) => {
     return (
         <Table responsive hover striped>
             <thead className="tHead">
@@ -35,7 +36,8 @@ const operatorsGrid = (data, openEditOperatorModal) => {
                 {data?.map((res, i) => (
                     <tr className="tRow" key={i}>
                         <td className="tCell identifier">{res?.id}</td>
-                        <td className="tCell">{res?.vendorName}</td>
+                        <td className="tCell">{res?.employeeName}</td>
+                        <td className="tCell">{res?.vendorId}</td>
                         <td className="tCell">{res?.phoneNo}</td>
                         <td className="tCell">{res?.serviceAreaId}</td>
                         <td className="tCell">{res?.userName}</td>
@@ -51,11 +53,10 @@ const operatorsGrid = (data, openEditOperatorModal) => {
                             )}
                         </td>
                         <td className="tCell actionSec">
-                            {/* <Button variant="outline-secondary">Reset Password</Button> */}
                             <Button
                                 variant="primary"
                                 className="primary-btn"
-                                onClick={() => openEditOperatorModal(res)}
+                                onClick={() => openEditEmployeeModal(res)}
                             >
                                 <i className="bi bi-pencil"></i> Edit
                             </Button>
@@ -68,61 +69,61 @@ const operatorsGrid = (data, openEditOperatorModal) => {
 };
 
 const Index = () => {
-    const [operators, setOperators] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedOperator, setSelectedOperator] = useState(null);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
 
     // Fetch employee data
     useEffect(() => {
-        const fetchOperators = async () => {
-        const token = sessionStorage.getItem('authToken');
+        const fetchEmployees = async () => {
+            const token = sessionStorage.getItem('authToken')
             
             try {
-                const operatorResponse = await axios.get(
-                    `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/vendor/master/vendor/vendor`,
+                const employeeResponse = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/employee/master/employee/employee`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
-                setOperators(operatorResponse.data.data);
+                setEmployees(employeeResponse.data.data);
             } catch (error) {
-                console.error('Error fetching operator data:', error);
+                console.error('Error fetching employee data:', error);
             }
         };
-        fetchOperators();
+        fetchEmployees();
     }, []);
 
-    const openAddOperatorModal = () => {
+    const openAddEmployeeModal = () => {
         setIsAddModalOpen(true);
     };
 
-    const closeAddOperatorModal = () => {
+    const closeAddEmployeeModal = () => {
         setIsAddModalOpen(false);
     };
 
-    const openEditOperatorModal = (operator) => {
-        setSelectedOperator(operator); // Store the selected employee data
+    const openEditEmployeeModal = (employee) => {
+        setSelectedEmployee(employee); // Store the selected employee data
         setIsEditModalOpen(true); // Open the modal
     };
 
-    const closeEditOperatorModal = () => {
-        setSelectedOperator(null); // Clear the selected employee data
+    const closeEditEmployeeModal = () => {
+        setSelectedEmployee(null); // Clear the selected employee data
         setIsEditModalOpen(false); // Close the modal
     };
 
     return (
         <>
-            <AddOperator show={isAddModalOpen} onHide={closeAddOperatorModal} />
-            <EditOperator
+            <AddEmployee show={isAddModalOpen} onHide={closeAddEmployeeModal} />
+            <EditEmployee
                 show={isEditModalOpen}
-                onHide={closeEditOperatorModal}
-                operator={selectedOperator} // Pass selected employee data to modal
+                onHide={closeEditEmployeeModal}
+                employee={selectedEmployee} // Pass selected employee data to modal
             />
-            <div className="operatorContent">
+            <div className="employeeContent">
                 <div className="topSection">
                     <div className="topSection__left">
-                        <h3 className="topSection__left--title">Operators</h3>
+                        <h3 className="topSection__left--title">Employees</h3>
                     </div>
                     <div className="topSection__right">
                         <Button
@@ -134,14 +135,14 @@ const Index = () => {
                         <Button
                             variant="primary"
                             className="primary-btn"
-                            onClick={openAddOperatorModal}
+                            onClick={openAddEmployeeModal}
                         >
                             <i className="bi bi-plus"></i> Add
                         </Button>
                     </div>
                 </div>
                 <div className="dataGrid">
-                    {operatorsGrid(operators, openEditOperatorModal)}
+                    {employeesGrid(employees, openEditEmployeeModal)}
                 </div>
             </div>
         </>

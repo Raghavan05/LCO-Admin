@@ -11,7 +11,7 @@ const tHeadTitle = [
     "Name",
     "Mobile Number",
     "Username",
-    "Status",
+    // "Status",
     "Actions",
 ];
 

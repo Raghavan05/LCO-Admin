@@ -1,92 +1,98 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import './addOperator.scss';
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Modal from 'react-bootstrap/Modal';
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import axios from 'axios';
 
-const validation = Yup.object({
-
-})
-
-const Index = (props) => {
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        mode: "onSubmit",
-        resolver: yupResolver(
-            validation
-        ),
+const AddOperatorModal = ({ show, onHide, onSave }) => {
+    // Validation schema
+    const validation = Yup.object({
+        name: Yup.string().required('Operator Name is required'),
+        mobileNo: Yup.string().required('Mobile Number is required'),
+        username: Yup.string().required('Username is required'),
+        serviceArea: Yup.string().required('Service Area is required'),
+        cableType: Yup.string().required('Cable Type is required'),
+        emergencyMobileNo: Yup.string().nullable(),
     });
 
-    const handleClose = () => {
-        props.onHide();
-    }
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        mode: 'onSubmit',
+        resolver: yupResolver(validation),
+    });
+
+    const [loading, setLoading] = useState(false);
+
+    // Reset form when operatorData changes
+   
+
+    // Submit handler
+    const onSubmit = async (data) => {
+        setLoading(true);
+        try {
+            const token = sessionStorage.getItem('authToken'); // Retrieve token
+            const url =`${process.env.REACT_APP_BASE_URL}/vendors-connect/api/admin/master/internetplans/internetplans`;
+
+            const response = await axios.post(url, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
+            onSave(response.data); // Callback to update parent component
+            onHide(); // Close the modal
+        } catch (error) {
+            console.error('Error saving operator:', error);
+            alert('An error occurred while saving the operator. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-        <Modal {...props} className='addOperator-modal'>
+        <Modal show={show} onHide={onHide} className="addOperator-modal">
             <Modal.Header closeButton>
-                <Modal.Title>Add Operator</Modal.Title>
+                <Modal.Title>{'Add Operator'}</Modal.Title>
             </Modal.Header>
-            <Modal.Body className='addOperator-modal__body'>
-                <Form className="addOperator-modal__body__form" >
-                    <Form.Group className="mb-4 formGroup" controlId="name">
-                        <Form.Label className="formGroup--label">Operator Name</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("name")} placeholder="Enter Operator name" />
-                        </InputGroup>
-                        <span className={`error ${errors.name && 'visible'}`}>{errors?.name?.message}</span>
-                    </Form.Group>
-                    <Form.Group className="mb-4 formGroup" controlId="mobileNo">
-                        <Form.Label className="formGroup--label">Mobile Number</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("mobileNo")} placeholder="Enter mobile number" />
-                        </InputGroup>
-                        <span className={`error ${errors.mobileNo && 'visible'}`}>{errors?.mobileNo?.message}</span>
-                    </Form.Group>
-                    <Form.Group className="mb-4 formGroup" controlId="emergencyMobileNo">
-                        <Form.Label className="formGroup--label">Emergency Number (optional)</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("emergencyMobileNo")} placeholder="Enter an Emergency number" />
-                        </InputGroup>
-                        <span className={`error ${errors.emergencyMobileNo && 'visible'}`}>{errors?.emergencyMobileNo?.message}</span>
-                    </Form.Group>
-                    <Form.Group className="mb-4 formGroup" controlId="serviceArea">
-                        <Form.Label className="formGroup--label">Service Area</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("serviceArea")} placeholder="Enter service area" />
-                        </InputGroup>
-                        <span className={`error ${errors.name && 'visible'}`}>{errors?.name?.message}</span>
-                    </Form.Group>
-                    <Form.Group className="mb-4 formGroup" controlId="username">
-                        <Form.Label className="formGroup--label">User Name</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("username")} placeholder="Enter user name" />
-                        </InputGroup>
-                        <span className={`error ${errors.username && 'visible'}`}>{errors?.username?.message}</span>
-                    </Form.Group>
-                    <Form.Group className="mb-4 formGroup" controlId="cableType">
-                        <Form.Label className="formGroup--label">Cable Type</Form.Label>
-                        <InputGroup className="mb-1 formGroup__inputGroup">
-                            <Form.Control type="text" {...register("cableType")} placeholder="Enter cable Type" />
-                        </InputGroup>
-                        <span className={`error ${errors.cableType && 'visible'}`}>{errors?.cableType?.message}</span>
-                    </Form.Group>
+            <Modal.Body className="addOperator-modal__body">
+                <Form onSubmit={handleSubmit(onSubmit)} className="addOperator-modal__body__form">
+                    {['name', 'mobileNo', 'emergencyMobileNo', 'serviceArea', 'username', 'cableType'].map((field) => (
+                        <Form.Group key={field} className="mb-4 formGroup" controlId={field}>
+                            <Form.Label className="formGroup--label">{field}</Form.Label>
+                            <InputGroup className="mb-1 formGroup__inputGroup">
+                                <Form.Control
+                                    type="text"
+                                    {...register(field)}
+                                    placeholder={`Enter ${field}`}
+                                />
+                            </InputGroup>
+                            <span className={`error ${errors[field] && 'visible'}`}>
+                                {errors[field]?.message}
+                            </span>
+                        </Form.Group>
+                    ))}
+                    <div className="modal-buttons">
+                        <Button variant="outline-primary" onClick={onHide} disabled={loading}>
+                            Close
+                        </Button>
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            {loading ? 'Saving...' : 'Save Changes'}
+                        </Button>
+                    </div>
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="outline-primary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
-            </Modal.Footer>
         </Modal>
-    )
-}
+    );
+};
 
-export default Index
+export default AddOperatorModal;

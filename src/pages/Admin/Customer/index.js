@@ -62,12 +62,14 @@ const CustomerPage = () => {
     // Fetch customer data
     useEffect(() => {
         const fetchCustomers = async () => {
+            const token = sessionStorage.getItem('authToken'); // Retrieve token from sessionStorage
+
             try {
                 const response = await axios.get(
                     `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/customer/master/customer/customer`,
                     {
                         headers: {
-                            Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );

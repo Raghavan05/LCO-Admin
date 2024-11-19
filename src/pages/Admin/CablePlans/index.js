@@ -1,79 +1,110 @@
 import React, { useEffect, useState } from 'react';
 import './CablePlans.scss';
 import axios from 'axios';
-
+import AddCablePlansModal from "../../../components/Operator/Modals/AddCablePlans";
 import CablePlanCard from "../../../components/Common/CablePlanCard";
-import CablePlanDetails from "../../../components/Common/Modals/CablePlansDetail";
-
-// Fetch customer data
+import CablePlansDetailModal from "../../../components/Common/Modals/CablePlansDetail";
+import { Button } from 'react-bootstrap';
 
 const Index = () => {
     const [cablePlansDetails, setCablePlansDetails] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    const [cablePlans, setCablePlans] = useState({});
+    const [cablePlanDetails, setCablePlanDetails] = useState({});
+    const [openAddModal, setOpenAddModal] = useState(false);
 
     // Fetch data from the API
     useEffect(() => {
         const fetchInternetPlansDetails = async () => {
+            const token = sessionStorage.getItem('authToken');
+            const url = `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/admin/master/cableplans/cableplans`;
+    
             try {
-                const response = await axios.get(
-                    `${process.env.REACT_APP_BASE_URL}/vendors-connect/api/admin/master/cableplans/cableplans`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`,
-                        },
-                    }
-                );
-                console.log(response.data.data);
-                setCablePlansDetails(response.data.data);
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log("API Response:", response.data);
+                setCablePlansDetails(response.data.data || []); // Fallback to empty array
+
+                
             } catch (error) {
-                console.error("Error fetching customer data:", error);
-                // Optionally show an error state to the user
+                console.error("Error fetching internet plans:", error);
             }
         };
-
+    
         fetchInternetPlansDetails();
     }, []);
+    
 
-    // Handle modal opening
-    const openTaskDetailModal = (status, data) => {
+    // Handle modals
+    const handleDetailModal = (status, data = {}) => {
         setOpenModal(status);
-        setCablePlans(data);
+        setCablePlanDetails(data);
     };
+
+    const handleAddModal = (status) => {
+        setOpenAddModal(status);
+    };
+
+    // Handle saving new internet plans
+    const handleSaveCablePlan = (newPlan) => {
+        const validatedPlan = {
+            id: newPlan?.id || Date.now(), // Generate fallback ID if missing
+            ...newPlan,
+        };
+        setCablePlansDetails((prevDetails) => [...prevDetails, validatedPlan]);
+    };
+    
 
     return (
         <>
-            <CablePlanDetails
+            <AddCablePlansModal
+                show={openAddModal}
+                onHide={() => handleAddModal(false)}
+                onSave={handleSaveCablePlan}
+            />
+            <CablePlansDetailModal
                 show={openModal}
-                data={cablePlans}
-                onHide={() => openTaskDetailModal(false, {})}
+                data={cablePlanDetails}
+                onHide={() => handleDetailModal(false)}
             />
             <div className="content">
                 <div className="topSection">
                     <div className="topSection--left">
-                        <h3 className="topSection--left__title">
-                            Cable Plans
-                        </h3>
+                        <h3 className="topSection--left__title">Cable Plans</h3>
                     </div>
                     <div className="topSection--right">
                         <div className="filter-widget">
                             <p>Filter</p>
                             <span className="filter-widget__cover">
-                                <i className="bi bi-filter filter-widget__cover"></i>
+                                <i className="bi bi-filter"></i>
                             </span>
                         </div>
+                        <Button
+                            variant="primary"
+                            className="primary-btn"
+                            onClick={() => handleAddModal(true)}
+                        >
+                            <i className="bi bi-plus"></i> Add
+                        </Button>
                     </div>
                 </div>
                 <div className="bottomSection">
-                    {cablePlansDetails?.map((data,index) => (
-                        <CablePlanCard 
-                            index = {index}
-                            key={data.id} // Assuming data has an `id` field
-                            data={data} 
-                            showModal={openTaskDetailModal}
-                        />
-                    ))}
-                </div>
+    {Array.isArray(cablePlansDetails) && cablePlansDetails.length > 0 ? (
+        cablePlansDetails.map((data, index) => (
+            <CablePlanCard
+                key={data?.id || index}
+                index={index}
+                data={data}
+                showModal={handleDetailModal}
+            />
+        ))
+    ) : (
+        <p>No cable plans available</p>
+    )}
+</div>
+
             </div>
         </>
     );

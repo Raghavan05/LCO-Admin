@@ -17,9 +17,9 @@ const tHeadTitle = [
     "Mobile Number",
     "Service Area",
     // "Username",
-    "Status",
-    "Cable Type",
-    "Actions",
+    // "Status",
+    // "Cable Type",
+    // "Actions",
 ];
 
 const operatorsGrid = (data) => {
@@ -53,21 +53,21 @@ const operatorsGrid = (data) => {
                             {/* <td className="tCell">
                                 {res?.email}
                             </td> */}
-                            <td className="tCell">
-                                {res?.status === true ? 
-                                    <Badge className='pill' bg='success' pill >Active</Badge> : 
-                                    <Badge className='pill' bg='danger' pill >In Active</Badge>
-                                }
-                            </td>
-                            <td className="tCell">
-                                {res?.cableType}
-                            </td>
-                            <td className="tCell actionSec">
-                                <Button variant="outline-secondary">Reset Password</Button>
-                                <a href="">
-                                    Details
-                                </a>
-                            </td>
+                                {/* <td className="tCell">
+                                    {res?.status === true ? 
+                                        <Badge className='pill' bg='success' pill >Active</Badge> : 
+                                        <Badge className='pill' bg='danger' pill >In Active</Badge>
+                                    }
+                                </td>
+                                <td className="tCell">
+                                    {res?.cableType}
+                                </td>
+                                <td className="tCell actionSec">
+                                    <Button variant="outline-secondary">Reset Password</Button>
+                                    <a href="">
+                                        Details
+                                    </a>
+                                </td> */}
                         </tr>
                     )
                 })}
@@ -142,22 +142,7 @@ const Index = (props) => {
             </div>
             <div className="dashContent--bottomSection">
                 <div className="dashContent--bottomSection__actionElements">
-                    <div className="servicesSection">
-                        <div className="serviceCard" onClick={() => handleNavigate("/admin/installation")}>
-                            <img src={Installation} alt="installationImg" width='130px'/>
-                            <h5>Installation</h5>
-                        </div>
-                        <div className="serviceCard">
-                            <img src={PaymentCard} alt="paymentImg" width='130px'/>
-                            <h5>Payment</h5>
-
-                        </div>
-                        <div className="serviceCard" onClick={() => handleNavigate("/admin/complaints")}>
-                            <img src={complaintForm} alt="complaintsImg" width='130px'/>
-                            <h5>Complaints</h5>
-                        </div>
-                    </div>
-                    <div className="requestSection">
+                <div className="requestSection">
                         <div className="requestCard">
                             <h4>General Request</h4>
                             <div className="requestCard--bottom">
@@ -169,11 +154,27 @@ const Index = (props) => {
                             </div>
                         </div>
                     </div>
+                    <div className="servicesSection">
+                        <div className="serviceCard" onClick={() => handleNavigate("/admin/installation")}>
+                            <img src={Installation} alt="installationImg" width='130px'/>
+                            <h5>Installation</h5>
+                        </div>
+                        {/* <div className="serviceCard">
+                            <img src={PaymentCard} alt="paymentImg" width='130px'/>
+                            <h5>Payment</h5>
+
+                        </div> */}
+                        <div className="serviceCard" onClick={() => handleNavigate("/admin/complaints")}>
+                            <img src={complaintForm} alt="complaintsImg" width='130px'/>
+                            <h5>Complaints</h5>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div className="dashContent--bottomSection__dataGrid">
                     <span>
                         <h5 className='title'>Customers</h5>
-                        <h6 className='cta'>View All</h6>
+                        {/* <h6 className='cta'>View All</h6> */}
                     </span>
                     {operatorsGrid(customers)}
                 </div>
